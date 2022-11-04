@@ -2,3 +2,40 @@ html, body {
     margin: 0;
     height: 100%;
 }
+
+#title {
+    text-align: center;
+}
+
+#toolbar {
+    width: 100%;
+    height: 80px;
+    background-color: aquamarine;
+    border: 3px black;
+    border-style: solid;
+}
+
+#container {
+    position: relative;
+}
+
+#container canvas, #overlay {
+    position: absolute;
+}
+
+canvas {
+    border: 1px solid black;
+}
+
+.effect {
+    height: 50px;
+    width: 50px;
+    background-color: #bbb;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.effect:hover {
+    scale: 1.2;
+    transition: 0.4s;
+}
