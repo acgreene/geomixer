@@ -25,8 +25,34 @@ function postMouseCoords(event) {
     else {
         ctx.fillStyle = 'red';
         ctx.fill();
-        // TO DO: instead of sending mouse coords, send mix amounts
-        doFetch('/mouse', 'POST', mouse.coordinates, 'Unable to send mouse coords')
+
+        // compute distance between mouse and each point
+        let effectMixes = []; 
+        let totalDist = 0;
+        for (let j = 0; j < shape.points.length; j++) {
+            // distance formula
+            let xDiff = (mouse.xpos - shape.points[j].x) ** 2;
+            let yDiff = (mouse.ypos - shape.points[j].y) ** 2;
+            let dist = Math.sqrt(xDiff + yDiff);
+            
+            totalDist += dist;
+
+            let fxName = shape.points[j].div.children[0].innerHTML; 
+
+            let effectMix = {
+                name: fxName,
+                mix: dist
+            }
+            effectMixes.push(effectMix);
+        }
+
+        // create percentage blends for each distance
+        for (let j = 0; j < effectMixes.length; j++) {
+            effectMixes[j].mix = (effectMixes[j].mix / totalDist);
+        }
+
+        // post blends to server
+        doFetch('/mouse', 'POST', effectMixes, 'Unable to send mouse coords')
     }
 }
 canvas.addEventListener("mousemove", postMouseCoords, false);

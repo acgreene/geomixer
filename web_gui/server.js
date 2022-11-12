@@ -34,10 +34,12 @@ parser.on('data', data => {
 app.use(express.static("public"))
 
 app.post('/mouse', async (req, res) => {
-  let mouseCoords = req.body;
-  let mouseX = mouseCoords.x;
-  let mouseY = mouseCoords.y;
-  let serialMsg = mouseX.toString() + ', ' + mouseY.toString();
+  let mixes = req.body;
+  let serialMsg = '';
+  for (let j = 0; j < mixes.length; j++) {
+    serialMsg += mixes[j].name.toString() + ' ' + mixes[j].mix.toString() + ', ';
+  }
+
   console.log(serialMsg);
 
   res.send({});
