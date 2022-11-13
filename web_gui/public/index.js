@@ -13,17 +13,17 @@ let mouse = new Mouse();
 let shape = new Shape(canvas);
 
 ///// INTERACTIONS WITH SERVER /////
-function postMouseCoords(event) {
+function postMix(event) {
     let yOffset = toolbar.offsetHeight;
     mouse.updatePos(event, yOffset);
 
     if (mouse.isInsideShape(shape) == false) {
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'rgb(26, 108, 118)';
         ctx.fill();
         return;
     }
     else {
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = 'rgb(191, 237, 244)';
         ctx.fill();
 
         // compute distance between mouse and each point
@@ -55,7 +55,7 @@ function postMouseCoords(event) {
         doFetch('/mouse', 'POST', effectMixes, 'Unable to send mouse coords')
     }
 }
-canvas.addEventListener("mousemove", postMouseCoords, false);
+canvas.addEventListener("mousemove", postMix, false);
 
 ////// CANVAS FUNCTIONALITIY /////
 function sizeCanvas() {

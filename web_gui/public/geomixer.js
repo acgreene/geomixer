@@ -175,6 +175,7 @@ class Shape {
                 div.id = "deleteMe";
             }
         })
+
         parentDiv.appendChild(div);
     }
 
