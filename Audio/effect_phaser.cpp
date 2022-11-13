@@ -10,10 +10,10 @@ void AudioEffectPhaser::update(void)
     //transmit
     audio_block_t *block;
     short *bp;
-    //Serial.println("update");
+    ////Serial.println("update");
     if(!on) {
     // Just passthrough and add samples to queue
-        Serial.println("test");
+        //Serial.println("test");
         block = receiveWritable(0);
         if(block) {
             bp = block->data;
@@ -49,7 +49,7 @@ void AudioEffectPhaser::update(void)
 
 void AudioEffectPhaser::shiftLeft()
 {
-    //Serial.println("Shift Left");
+    ////Serial.println("Shift Left");
     for(int i = AUDIO_BLOCK_SAMPLES; i < delayAmount+AUDIO_BLOCK_SAMPLES; ++i)
     {
         queue[i-AUDIO_BLOCK_SAMPLES] = queue[i];
@@ -58,29 +58,29 @@ void AudioEffectPhaser::shiftLeft()
 
 void AudioEffectPhaser::insertBlock(short* bp)
 {
-    //Serial.println("Insert Block");
+    ////Serial.println("Insert Block");
     short* cpy = bp;
     for(int i = delayAmount; i < delayAmount + AUDIO_BLOCK_SAMPLES; ++i)
     {
         queue[i] = *cpy++;
     }
-    //Serial.println("end insert block");
+    ////Serial.println("end insert block");
 }
 
 void AudioEffectPhaser::begin(int delay_length)
 {
-    //Serial.print("AudioBlockSamples:");
-    //Serial.println(AUDIO_BLOCK_SAMPLES);
-    //Serial.println("begin");
+    ////Serial.print("AudioBlockSamples:");
+    ////Serial.println(AUDIO_BLOCK_SAMPLES);
+    ////Serial.println("begin");
     on = true;
     int diff = delay_length - delayAmount;
-    //Serial.println(diff);
+    ////Serial.println(diff);
     if(delay_length <= MAX_DELAY - AUDIO_BLOCK_SAMPLES)
     {
         delayAmount = delay_length;
         if(diff < 0)
         {
-            //Serial.println("Negative case");
+            ////Serial.println("Negative case");
             for(int i = diff * -1; i < delayAmount + AUDIO_BLOCK_SAMPLES; ++i)
             {
                 queue[i + diff] = queue[i];
@@ -88,7 +88,7 @@ void AudioEffectPhaser::begin(int delay_length)
         }
         if(diff > 0)
         {
-            //Serial.println("Positive Case");
+            ////Serial.println("Positive Case");
             for(int i = 0; i < delayAmount + AUDIO_BLOCK_SAMPLES; ++i)
             {
                 queue[i + diff] = queue[i];
@@ -100,7 +100,7 @@ void AudioEffectPhaser::begin(int delay_length)
             
         }
     }
-    //Serial.println("Done begin");
+    ////Serial.println("Done begin");
 }
 void AudioEffectPhaser::turnOff()
 {
@@ -110,13 +110,13 @@ void AudioEffectPhaser::turnOff()
 void AudioEffectPhaser::changeDelay(int delay)
 {
     int diff = delay - delayAmount;
-    //Serial.println(diff);
+    ////Serial.println(diff);
     if(delay <= MAX_DELAY - AUDIO_BLOCK_SAMPLES)
     {
         delayAmount = delay;
         if(diff < 0)
         {
-            //Serial.println("negative");
+            ////Serial.println("negative");
             for(int i = diff * -1; i < delayAmount + AUDIO_BLOCK_SAMPLES; ++i)
             {
                 queue[i + diff] = queue[i];
@@ -124,7 +124,7 @@ void AudioEffectPhaser::changeDelay(int delay)
         }
         if(diff > 0)
         {
-            //Serial.println("positive");
+            ////Serial.println("positive");
             for(int i = 0; i < delayAmount + AUDIO_BLOCK_SAMPLES; ++i)
             {
                 queue[i + diff] = queue[i];
@@ -136,5 +136,5 @@ void AudioEffectPhaser::changeDelay(int delay)
             
         }
     }
-    //Serial.println("done changeDelay");
+    ////Serial.println("done changeDelay");
 }

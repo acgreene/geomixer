@@ -6,33 +6,33 @@
 //attempting to write 29 ms delay chorus
 void AudioEffectChorus2::changeNum(int numVoices)
 {
-  Serial.println("changeNum");
+  //Serial.println("changeNum");
   num_voices = numVoices;
 }
 
 void AudioEffectChorus2::update(void) {
   
-  Serial.println("update");
+  //Serial.println("update");
   audio_block_t *block;
   block = receiveWritable(0);
   if(block)
   {
     short *bp = block->data;
-    Serial.println("firstloop");
-    Serial.println("after first loop");
-    Serial.println(num_voices);
+    //Serial.println("firstloop");
+    //Serial.println("after first loop");
+    //Serial.println(num_voices);
     if(num_voices == 0)
     {
-      Serial.println("0");
+      //Serial.println("0");
       transmit(block,0);
-      Serial.println("after trasnmit");
+      //Serial.println("after trasnmit");
       release(block);
-      Serial.println("after0");
+      //Serial.println("after0");
     }
     else if(num_voices == 1)
     {
       short* cpy = bp;
-      Serial.println("one voice");
+      //Serial.println("one voice");
       short cpy1[AUDIO_BLOCK_SAMPLES];
       for(int i = 0; i <AUDIO_BLOCK_SAMPLES; i++)
       {
@@ -157,7 +157,7 @@ void AudioEffectChorus2::update(void) {
       release(block);
     }
     
-    Serial.println("endloop");
+    //Serial.println("endloop");
   }
   
 }
