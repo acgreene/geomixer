@@ -44,6 +44,12 @@ if 1:
 
     apf = apf3
 
+    if 1:
+        print(len(output))
+        output = np.asarray(apf / (2**18), dtype = np.float32)
+        sd.play(output, fs)
+        sd.wait()
+
 # comb filter: y[n] = x[n] + g·y[n−M]
 comb_g1 = 0.742
 comb_g2 = 0.733

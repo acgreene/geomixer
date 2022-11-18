@@ -70,13 +70,12 @@ void AudioEffectMyReverb::shiftLeft(int16_t* queue, uint16_t delayAmount)
 void AudioEffectMyReverb::insertBlock(int16_t* queue, int16_t* block, uint16_t delayAmount)
 {
     shiftLeft(queue, delayAmount); //shift the queue
-    //Serial.println("Insert Block");
+    Serial.println("Insert Block");
     int16_t* cpy = block; //copy pointer to the block to insert
     for(int i = delayAmount; i < delayAmount + AUDIO_BLOCK_SAMPLES; ++i)
     {
         queue[i] = *cpy++;
     }
-    //Serial.println("end insert block");
 }
 
 void AudioEffectMyReverb::turnOff()
@@ -118,9 +117,10 @@ void AudioEffectMyReverb::update(void)
   int16_t i;
 
   if(!on) {
-    Serial.println("update - off");
+    Serial.print("update - off");
     block = receiveWritable(0);
     if(block) {
+      Serial.println(" - got block");
       bp = block->data;
       for(i = 0; i < 3; i++){
         insertBlock(apfs[i].in_queue, bp, apfs[i].delay);
@@ -132,19 +132,21 @@ void AudioEffectMyReverb::update(void)
       transmit(block,0);
       release(block);
     }
+    Serial.println(" - no block");
   }
   else{
     Serial.println("update - on");
     int16_t cpy[AUDIO_BLOCK_SAMPLES]; //copy of input
     block = receiveWritable(0);
     if(block) {
+      Serial.println(" - got block");
       bp = block->data;
       for(int i = 0; i < AUDIO_BLOCK_SAMPLES; ++i) //do copy input
       {
           cpy[i] = bp[i];
       }
 
-      _run_apf(&apfs[0], block->data, aux_buf); //run apf1 -> output into aux
+      _run_apf(&apfs[0], bp, aux_buf); //run apf1 -> output into aux
       _run_apf(&apfs[1], aux_buf, aux_buf); //run apf2
       _run_apf(&apfs[2], aux_buf, aux_buf); //run apf3
 
@@ -152,40 +154,33 @@ void AudioEffectMyReverb::update(void)
       _run_comb(&combs[0], aux_buf, sum_buf); //send to sum buff
       for(int i = 0; i < AUDIO_BLOCK_SAMPLES; ++i) //add sum buff to bp output buf
       {
-        *bp = sum_buf[i];
-        bp++;
+        bp[i] = sum_buf[i];
       }
-      bp = block->data;
 
       _run_comb(&combs[1], aux_buf, sum_buf); //repeat
       for(int i = 0; i < AUDIO_BLOCK_SAMPLES; ++i)
       {
-        *bp += sum_buf[i];
-        bp++;
+        bp[i] += sum_buf[i];
       }
-      bp = block->data;
 
       _run_comb(&combs[2], aux_buf, sum_buf);
       for(int i = 0; i < AUDIO_BLOCK_SAMPLES; ++i)
       {
-        *bp += sum_buf[i];
-        bp++;
+        bp[i] += sum_buf[i];
       }
-      bp = block->data;
 
       _run_comb(&combs[3], aux_buf, sum_buf);
       for(int i = 0; i < AUDIO_BLOCK_SAMPLES; ++i)
       {
-        *bp += sum_buf[i];
-        bp++;
+        bp[i] += sum_buf[i];
       }
 
       for(i = 0; i < 3; i++){ //move copy of input into in_queue, move output into out_queue
         insertBlock(apfs[i].in_queue, cpy, apfs[i].delay);
-        insertBlock(apfs[i].out_queue, block->data, apfs[i].delay);
+        insertBlock(apfs[i].out_queue, bp, apfs[i].delay);
       }
       for(i = 0; i < 4; i++){ //move output into comb queues
-        insertBlock(combs[i].queue, block->data, combs[i].delay);
+        insertBlock(combs[i].queue, bp, combs[i].delay);
       }
 
       transmit(block,0);
