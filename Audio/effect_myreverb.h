@@ -18,48 +18,54 @@
 class AudioEffectMyReverb : public AudioStream
 {
 public:
-        AudioEffectMyReverb() : AudioStream(1, inputQueueArray) {
-          begin();
+        AudioEffectMyReverb(void) : AudioStream(1, inputQueueArray) {
+          on = false;
+          init();
+          clear_buffers();
         }
-        virtual void update(void);
         void begin(void);
+        virtual void update(void);
         void turnOff(void);
+        void turnOn(void);
 private:
         struct apf {
-          int32_t gain;
-          short *in_queue;
-          short *out_queue;
-          uint32_t delay;
+          int16_t gain;
+          int16_t *in_queue;
+          int16_t *out_queue;
+          uint16_t delay;
         };
 
         struct comb {
-          int32_t gain;
-          short *queue;
-          uint32_t delay;
-        }
+          int16_t gain;
+          int16_t *queue;
+          uint16_t delay;
+        };
 
-        void run_apf(struct apf *apf, short *in_buf, short *out_buf);
-        void run_comb(struct lpf *lpf, short *in_buf, short *out_buf);
-        void shiftLeft(short *queue, uint32_t delayAmount);
-        void insertBlock(short* queue, short* block, uint32_t delayAmount);
+        void init(void);
+        void clear_buffers(void);
+        static void _run_apf(struct apf *apf, int16_t *in_buf, int16_t *out_buf);
+        static void _run_comb(struct comb *comb, int16_t *in_buf, int16_t *out_buf);
+        void shiftLeft(int16_t *queue, uint16_t delayAmount);
+        void insertBlock(int16_t* queue, int16_t* block, uint16_t delayAmount);
 
         bool on;
         audio_block_t *inputQueueArray[1];
         struct apf apfs[3];
         struct comb combs[4];
 
-        short apf1_inqueue[APF_D1 + AUDIO_BLOCK_SAMPLES];
-        short apf1_outqueue[APF_D1 + AUDIO_BLOCK_SAMPLES];
-        short apf2_inqueue[APF_D2 + AUDIO_BLOCK_SAMPLES];
-        short apf2_outqueue[APF_D2 + AUDIO_BLOCK_SAMPLES];
-        short apf3_inqueue[APF_D3 + AUDIO_BLOCK_SAMPLES];
-        short apf3_outqueue[APF_D3 + AUDIO_BLOCK_SAMPLES];
+        int16_t apf1_inqueue[APF_D1 + AUDIO_BLOCK_SAMPLES];
+        int16_t apf1_outqueue[APF_D1 + AUDIO_BLOCK_SAMPLES];
+        int16_t apf2_inqueue[APF_D2 + AUDIO_BLOCK_SAMPLES];
+        int16_t apf2_outqueue[APF_D2 + AUDIO_BLOCK_SAMPLES];
+        int16_t apf3_inqueue[APF_D3 + AUDIO_BLOCK_SAMPLES];
+        int16_t apf3_outqueue[APF_D3 + AUDIO_BLOCK_SAMPLES];
 
-        short comb1_queue[COMB_D1 + AUDIO_BLOCK_SAMPLES];
-        short comb2_queue[COMB_D2 + AUDIO_BLOCK_SAMPLES];
-        short comb3_queue[COMB_D3 + AUDIO_BLOCK_SAMPLES];
-        short comb4_queue[COMB_D4 + AUDIO_BLOCK_SAMPLES];
+        int16_t comb1_queue[COMB_D1 + AUDIO_BLOCK_SAMPLES];
+        int16_t comb2_queue[COMB_D2 + AUDIO_BLOCK_SAMPLES];
+        int16_t comb3_queue[COMB_D3 + AUDIO_BLOCK_SAMPLES];
+        int16_t comb4_queue[COMB_D4 + AUDIO_BLOCK_SAMPLES];
 
-        short sum_buf[AUDIO_BLOCK_SAMPLES];
-        short aux_buf[AUDIO_BLOCK_SAMPLES];
+        int16_t sum_buf[AUDIO_BLOCK_SAMPLES];
+        int16_t aux_buf[AUDIO_BLOCK_SAMPLES];
 };
+#endif
