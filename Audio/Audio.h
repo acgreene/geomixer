@@ -142,5 +142,6 @@
 //Geomixer effects here:
 #include "effect_phaser.h"
 #include "AudioEffectChorus2.h"
+#include "effect_myreverb.h"
 
 #endif
