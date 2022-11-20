@@ -7,7 +7,7 @@ class AudioEffectPhaser : public AudioStream
 {
 public:
         #define AUDIO_BLOCK_SIZE 180
-        static const int MAX_DELAY = 1323 + AUDIO_BLOCK_SAMPLES;
+        static const int MAX_DELAY = 1323 + 128;
         //standard delay times seem to be 5ms to 30 ms, use 30 as max, 5 as default
         //converting to samples, with a 44.1 kHz sampling rate (actual rate tbd)
         //Max = 1323 samples
@@ -24,11 +24,11 @@ public:
         //to start the effect
         //Maybe can delete, the delay line was needed for Chorus function,
         //don't really see how it helps with Phaser
-        void begin(int delay_length);
+        void begin(short delay_length);
         //called via interrupt
         virtual void update(void);
         //easiest implementation would be in samples, may be beneficial to do it in miliseconds instead though
-        void changeDelay(int delay);
+        void changeDelay(short delay);
 
         //will be useful for when effect not in triangle
         void turnOff();
