@@ -24,12 +24,14 @@ void AudioEffectDistortion2::update(void) {
     for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++)
     {
 
-        if (abs(*bp) > ((1/3)*AudioEffectDistortion2.max_) && abs(*bp) < ((2/3)*AudioEffectDistortion2.max_)){
-            *bp = (*bp/abs(*bp))*(3-((2-3*pow(*bp,2)))/6);
+        if (abs((*bp)) > ((1/3)*float(AudioEffectDistortion2.max_)) && abs(*bp) < ((2/3)*float(AudioEffectDistortion2.max_))){
+            *bp = (*bp/abs(*bp))*float(AudioEffectDistortion2.max_)*((3-pow((2-(*bp/abs(*bp))*(3.0*float(*bp)/float(AudioEffectDistortion2.max_))),2))/6);
         }
+
         
-        else if (abs(*bp) > ((2/3)*AudioEffectDistortion2.max_)){
-            *bp = (*bp/abs(*bp))*(1/2);
+        
+        else if (abs(*bp) > ((2/3)*float(AudioEffectDistortion2.max_))){
+            *bp = (*bp/abs(*bp))*(1/2)*float(AudioEffectDistortion2.max_);
         }
         
         bp++;
