@@ -6,8 +6,8 @@
 class AudioEffectPhaser : public AudioStream
 {
 public:
-        #define AUDIO_BLOCK_SIZE 180
-        static const int MAX_DELAY = 1323 + 128;
+        #define OSCILLATION_AMP 40
+        static const int MAX_DELAY = 1323 + 128 + OSCILLATION_AMP;
         //standard delay times seem to be 5ms to 30 ms, use 30 as max, 5 as default
         //converting to samples, with a 44.1 kHz sampling rate (actual rate tbd)
         //Max = 1323 samples
@@ -16,6 +16,8 @@ public:
         {
             on = false;
             delayAmount = 220;
+            sine_idx = 0;
+            oscil_delay = 0;
             //Serial.println("prememset");
             memset(queue, 0, sizeof(queue));
             //Serial.println("memset");
@@ -38,6 +40,8 @@ private:
         audio_block_t *inputQueueArray[1];
         int delayAmount;
         short queue[MAX_DELAY];
+        unsigned int sine_idx;
+        short oscil_delay;
         //helper function to move the AUDIO_BLOCK_SIZE:delayAmount+AUDIO_BLOCK_SIZE samples over by AUDIO_BLOCK_SIZE
         void shiftLeft();
         //inserts block at back of queue
