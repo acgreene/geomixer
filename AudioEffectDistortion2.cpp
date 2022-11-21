@@ -19,25 +19,20 @@ void AudioEffectDistortion2::update(void) {
     short *bp = block->data;
     Serial.println("firstloop");
     Serial.println("after first loop");
-    bp = bp/AudioEffectDistortion2.max_
     
 
     for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++)
     {
-        
 
-        if (bp > 1/3 && bp < 2/3){
-            bp = (3-((2-3*pow(bp,2)))/6);
+        if (abs(*bp) > ((1/3)*AudioEffectDistortion2.max_) && abs(*bp) < ((2/3)*AudioEffectDistortion2.max_)){
+            *bp = (*bp/abs(*bp))*(3-((2-3*pow(*bp,2)))/6);
         }
-        else if (bp < (-1/3) && bp > (-2/3)){
-            bp = (-1)*(3-((2+3*pow(bp,2)))/6);
+        
+        else if (abs(*bp) > ((2/3)*AudioEffectDistortion2.max_)){
+            *bp = (*bp/abs(*bp))*(1/2);
         }
-        else if (bp > 2/3){
-            bp = 1/2;
-        }
-        else if (bp < -2/3){
-            bp = -1/2;
-        }
+        
+        bp++;
       }
     
       Serial.println("0");
