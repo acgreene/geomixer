@@ -38,10 +38,10 @@ void AudioEffectPhaser::update(void)
         oscil_delay = (sineOut * OSCILLATION_AMP) >> 15;
         Serial.println(oscil_delay);
         short cpy[AUDIO_BLOCK_SAMPLES];
-        //OSCILLATION_AMP = 5
-        //oscil_delay should be on the order of -5 to 5
-        //negative delay implies sample older samples, i.e. start 5-oscil_delay
-        //positive delay implies take newer samples, i.e. start 5+oscil_delay
+        //OSCILLATION_AMP = 40
+        //oscil_delay should be on the order of -40 to 40
+        //negative delay implies sample older samples, i.e. start 10-oscil_delay
+        //positive delay implies take newer samples, i.e. start 10+oscil_delay
         int buffer = oscil_delay + OSCILLATION_AMP;
         block = receiveWritable(0);
             if(block) {
