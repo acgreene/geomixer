@@ -19,6 +19,9 @@ void AudioEffectDistortion2::update(void) {
     short *bp = block->data;
     Serial.println("firstloop");
     Serial.println("after first loop");
+
+    //sign = 0x8000 & *bp < 0 ? -1 : 1
+    // if necessary replace *bp/abs(*bp)
     
 /*
 TO DO: If necessary scale input and output depending on the desired sound
@@ -27,7 +30,7 @@ TO DO: If necessary scale input and output depending on the desired sound
 
     for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++)
     {
-
+        if (*bp != 0){
         if (abs((*bp)) > ((1/3)*float(AudioEffectDistortion2.max_)) && abs(*bp) < ((2/3)*float(AudioEffectDistortion2.max_))){
             *bp = (*bp/abs(*bp))*float(AudioEffectDistortion2.max_)*((3-pow((2-(*bp/abs(*bp))*(3.0*float(*bp)/float(AudioEffectDistortion2.max_))),2))/6);
         }
@@ -38,6 +41,7 @@ TO DO: If necessary scale input and output depending on the desired sound
             *bp = (*bp/abs(*bp))*(1/2)*float(AudioEffectDistortion2.max_);
         }
         //This if statement above flattens the signal when it is beyond 2/3 of the max
+        }
         
         bp++;
       }
