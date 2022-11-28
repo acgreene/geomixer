@@ -20,12 +20,15 @@ AudioConnection          patchCord6(chorus1, 0, mixer1, 1);
 AudioConnection          patchCord7(waveshape1, 0, mixer1, 0);
 AudioConnection          patchCord8(bitcrusher1, 0, mixer1, 3);
 AudioConnection          patchCord9(mixer1, 0, i2s2, 0);
+AudioConnection          patchCord10(mixer1, 0, i2s2, 1);
 // GUItool: end automatically generated code
 
 const int myInput = AUDIO_INPUT_LINEIN;
 #define CHORUS_DELAY_LENGTH (16*AUDIO_BLOCK_SAMPLES)
 short delayline[CHORUS_DELAY_LENGTH];
 AudioControlSGTL5000 audioShield;
+
+enum effects{WAVESHAPE, CHORUS, REVERB, BITCRUSH};
 
 void setup() {
   // put your setup code here, to run once:
@@ -48,10 +51,10 @@ void setup() {
   bitcrusher1.bits(4);
   bitcrusher1.sampleRate(44100);
   
-  mixer1.gain(0, 0);
-  mixer1.gain(1, 0);
-  mixer1.gain(2, 1);
-  mixer1.gain(3, 0);
+  mixer1.gain(WAVESHAPE, 0);
+  mixer1.gain(CHORUS, 0);
+  mixer1.gain(REVERB, 1);
+  mixer1.gain(BITCRUSH, 0);
 }
 
 void loop() {
@@ -67,6 +70,9 @@ void loop() {
   float g4;
 
   if(Serial.available() > 0){
+    
+    //type in form <0.00,0.00,0.00,0.00>
+    //note: <waveshape, chorus, reverb, bitcrusher>
     rc = Serial.readString();
     Serial.println(rc);
     
@@ -80,23 +86,23 @@ void loop() {
     g4 = c4.toFloat();
 
     if(g1 >= 0 && g1 <= 1){
-      mixer1.gain(0, g1);
-      Serial.println("Updated g1");
+      mixer1.gain(WAVESHAPE, g1);
+      Serial.print("Updated g1 to ");
       Serial.println(g1);
     }
     if(g2 >= 0 && g2 <= 1){
-      mixer1.gain(1, g2);
-      Serial.println("Updated g2");
+      mixer1.gain(CHORUS, g2);
+      Serial.print("Updated g2 to ");
       Serial.println(g2);
     }
     if(g3 >= 0 && g3 <= 1){
-      mixer1.gain(2, g3);
-      Serial.println("Updated g3");
+      mixer1.gain(REVERB, g3);
+      Serial.print("Updated g3 to ");
       Serial.println(g3);
     }
     if(g4 >= 0 && g4 <= 1){
-      mixer1.gain(3, g4);
-      Serial.println("Updated g4");
+      mixer1.gain(BITCRUSH, g4);
+      Serial.print("Updated g4 to ");
       Serial.println(g4);
     }
   }
