@@ -18,8 +18,8 @@ void AudioEffectPhaser::update(void)
         block = receiveWritable(0);
         if(block) {
             bp = block->data;
-            shiftLeft();
-            insertBlock(bp);
+            //shiftLeft();
+            queue.insertBlock(bp);
             transmit(block,0);
             //Serial.println("transmit");
             release(block);
@@ -36,23 +36,23 @@ void AudioEffectPhaser::update(void)
         sine_idx += increment;
         //Serial.println("else");
         oscil_delay = (sineOut * OSCILLATION_AMP) >> 15;
-        Serial.println(oscil_delay);
+        //Serial.println(oscil_delay);
+        //Serial.println(delayAmount);
         short cpy[AUDIO_BLOCK_SAMPLES];
         //OSCILLATION_AMP = 40
         //oscil_delay should be on the order of -40 to 40
         //negative delay implies sample older samples, i.e. start 10-oscil_delay
         //positive delay implies take newer samples, i.e. start 10+oscil_delay
         int buffer = oscil_delay + OSCILLATION_AMP;
+        //Serial.println(buffer);
         block = receiveWritable(0);
             if(block) {
                 bp = block->data;
-
                 for(int i = 0; i < AUDIO_BLOCK_SAMPLES; ++i)
                 {
-                    cpy[i] = queue[buffer++];
+                    cpy[i] = queue.getValue((MAX_DELAY - delayAmount) + buffer++);
                 }
-                shiftLeft();
-                insertBlock(bp);
+                queue.insertBlock(bp);
                 for(int i = 0; i < AUDIO_BLOCK_SAMPLES; ++i)
                 {
                     *bp = (*bp + cpy[i])/2;
@@ -67,7 +67,7 @@ void AudioEffectPhaser::update(void)
     }
 }
 
-void AudioEffectPhaser::shiftLeft()
+/* void AudioEffectPhaser::shiftLeft()
 {
     //Serial.println("Shift Left");
     for(int i = AUDIO_BLOCK_SAMPLES; i < delayAmount+AUDIO_BLOCK_SAMPLES+OSCILLATION_AMP; ++i)
@@ -85,15 +85,17 @@ void AudioEffectPhaser::insertBlock(short* bp)
         queue[i] = *cpy++;
     }
     //Serial.println("end insert block");
-}
+} */
 
 void AudioEffectPhaser::begin(short delay_length=220)
 {
-    //Serial.println("begin");
     this->on = true;
-    int diff = delay_length - this->delayAmount;
-    //Serial.println(diff);
-    if(delay_length <= MAX_DELAY - AUDIO_BLOCK_SAMPLES)
+    //int diff = delayAmount - delay_length;
+    //queue.phaserChangeDelay(diff);
+    if(delay_length > 1323) delay_length = 1323;
+    delayAmount = delay_length;
+
+    /*if(delay_length <= MAX_DELAY - AUDIO_BLOCK_SAMPLES)
     {
         if(diff < 0)
         {
@@ -118,8 +120,7 @@ void AudioEffectPhaser::begin(short delay_length=220)
             this->delayAmount = delay_length;
             
         }
-    }
-    //Serial.println("Done begin");
+    } */
 }
 void AudioEffectPhaser::turnOff()
 {
@@ -127,9 +128,12 @@ void AudioEffectPhaser::turnOff()
     on = false;
 }
 
-void AudioEffectPhaser::changeDelay(short delay)
+void AudioEffectPhaser::changeDelay(short delay_length)
 {
-    int diff = delay - delayAmount;
+    if(delay_length > 1323) delay_length = 1323;
+    delayAmount = delay_length;
+
+    /*int diff = delay - delayAmount;
     //Serial.println(diff);
     if(delay <= MAX_DELAY - AUDIO_BLOCK_SAMPLES)
     {
@@ -155,7 +159,7 @@ void AudioEffectPhaser::changeDelay(short delay)
             }
             this->delayAmount = delay;
             
-        }
-    }
+        } 
+    }*/
     //Serial.println("done changeDelay");
 }
