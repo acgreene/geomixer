@@ -78,7 +78,11 @@ void AudioEffectChorus2::update(void) {
           short current1 = buffer.getValue(i);
           short current2 = buffer.getValue((i-10*AUDIO_BLOCK_SAMPLES));
           short current3 = buffer.getValue((i-20*AUDIO_BLOCK_SAMPLES));
-          bp[i-20*AUDIO_BLOCK_SAMPLES] = (bp[i-20*AUDIO_BLOCK_SAMPLES] + current1 + current2 + current3)/4; 
+          short toAdd = (bp[i-20*AUDIO_BLOCK_SAMPLES] + current1)/4;
+          toAdd += current2/4;
+          toAdd += current3/4;
+          bp[i-20*AUDIO_BLOCK_SAMPLES] = toAdd;
+          //bp[i-20*AUDIO_BLOCK_SAMPLES] = (bp[i-20*AUDIO_BLOCK_SAMPLES] + current1)/4 + (current2 + current3)/4; 
         }
         transmit(block,0);
         release(block);

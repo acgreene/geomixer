@@ -4,18 +4,42 @@
 
 short circular_buffer::getValue(int indexDesired){
     //Serial.println((circ_idx + indexDesired) %capacity);
-    return c_array[(circ_idx + indexDesired) % capacity];
+    if((circ_idx + indexDesired) < capacity)
+    {
+        return c_array[(circ_idx + indexDesired)];
+    }
+    else if((circ_idx + indexDesired) >= capacity)
+    {
+        return c_array[(circ_idx + indexDesired)-capacity];
+    }
+    
+    //return c_array[(circ_idx + indexDesired) % capacity];
 }
 void circular_buffer::insertBlock(short* bp)
 {
     short* values = bp;
     for(int i = circ_idx; i < (circ_idx + 128); i++)
     {
-        c_array[i % capacity] = *values;
-        values++;
+        if(i < capacity)
+        {
+            c_array[i] = *values;
+            values++;
+        }
+        else if(i >= capacity)
+        {
+            c_array[i - capacity] = *values;
+            values++;
+        }
+        /*c_array[i % capacity] = *values;
+        values++;*/
     }
     circ_idx += 128;
-    circ_idx = circ_idx % capacity;
+    if(circ_idx >= capacity)
+    {
+        circ_idx -= capacity;
+    }
+    /*circ_idx += 128;
+    circ_idx = circ_idx % capacity;*/
     
 }
 
