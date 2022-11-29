@@ -4,6 +4,7 @@
 
 void AudioEffectPhaser::update(void)
 {
+    int start = micros();
     //read first AUDIO_BLOCK_SIZE samples from array
     //call function to shift all the other members of the array over by AUDIO_BLOCK_SIZE
     //insert incoming new sample block to back of array
@@ -65,6 +66,8 @@ void AudioEffectPhaser::update(void)
             sine_idx &= 0x7fffffff;
       }
     }
+    int end = micros();
+    //Serial.println(end - start);
 }
 
 /* void AudioEffectPhaser::shiftLeft()

@@ -14,6 +14,7 @@ void AudioEffectChorus2::changeNum(int numVoices)
 void AudioEffectChorus2::update(void) {
   
   //Serial.println("update");
+  int start = micros();
   audio_block_t *block;
   block = receiveWritable(0);
   //new code with one array, remember to change private variables when switching
@@ -90,4 +91,6 @@ void AudioEffectChorus2::update(void) {
       
       //Serial.println("endloop");
     }
+    int end = micros();
+    Serial.println(end - start);
 }
