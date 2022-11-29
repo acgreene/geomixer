@@ -13,7 +13,7 @@ public:
         }
         virtual void update(void);
 private:
-        int max = 32768;
+        int max = 32767;
        
         audio_block_t *inputQueueArray[1];
         
