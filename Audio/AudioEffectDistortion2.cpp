@@ -38,8 +38,12 @@ TO DO: If necessary scale input and output depending on the desired sound
         //This if statement above creates the curvature for the clipping when the signal is between 1/3 and 2/3 of the max
         
         
-        else if (abs(*bp) > ((2/3)*(float)(AudioEffectDistortion2::max_))){
-            *bp = (*bp/abs(*bp))*(1/2)*(float)(AudioEffectDistortion2::max_);
+        //else if (abs(*bp) > ((2/3)*(float)(AudioEffectDistortion2::max_))){
+        //    *bp = (*bp/abs(*bp))*(1/2)*(float)(AudioEffectDistortion2::max_);
+        //}
+
+        else{
+            min(*bp,(*bp/abs(*bp))*(1/2)*(float)(AudioEffectDistortion2::max_));
         }
         //This if statement above flattens the signal when it is beyond 2/3 of the max
         }
