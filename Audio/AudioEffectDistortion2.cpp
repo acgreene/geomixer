@@ -12,14 +12,14 @@
 void AudioEffectDistortion2::update(void) {
 int start = micros();
   
-  Serial.println("update");
+  //Serial.println("update");
   audio_block_t *block;
   block = receiveWritable(0);
   if(block)
   {
     short *bp = block->data;
-    Serial.println("firstloop");
-    Serial.println("after first loop");
+    //Serial.println("firstloop");
+    //Serial.println("after first loop");
 
     //sign = 0x8000 & *bp < 0 ? -1 : 1
     // if necessary replace *bp/abs(*bp)
@@ -47,11 +47,11 @@ TO DO: If necessary scale input and output depending on the desired sound
         bp++;
       }
     
-      Serial.println("0");
+      //Serial.println("0");
       transmit(block,0);
-      Serial.println("after trasnmit");
+      //Serial.println("after trasnmit");
       release(block);
-      Serial.println("after0");
+      //Serial.println("after0");
     }
 int end = micros();
 int duration = end - start;
