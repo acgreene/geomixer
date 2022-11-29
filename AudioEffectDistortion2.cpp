@@ -1,7 +1,6 @@
-#include <chrono>
 #include <Arduino.h>
 #include "AudioEffectDistortion2.h"
-using namespace std::chrono;
+
 
 //update is called every 128 samples/2.9 ms
 //attempting to write 29 ms delay chorus
@@ -11,7 +10,7 @@ using namespace std::chrono;
 //}
 
 void AudioEffectDistortion2::update(void) {
-auto start = high_resolution_clock::now();
+int start = micros();
   
   Serial.println("update");
   audio_block_t *block;
@@ -54,9 +53,8 @@ TO DO: If necessary scale input and output depending on the desired sound
       release(block);
       Serial.println("after0");
     }
-auto stop = high_resolution_clock::now();
-auto duration = duration_cast<microseconds>(stop - start);
-Serial.print("time duration distortion ");
+int end = micros();
+int duration = end - start;
 Serial.println(duration);
 
 }
