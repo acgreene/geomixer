@@ -55,7 +55,14 @@ function postMix(event) {
         doFetch('/mouse', 'POST', effectMixes, 'Unable to send mouse coords')
     }
 }
-canvas.addEventListener("mousemove", postMix, false);
+let lastMove = 0;
+canvas.addEventListener("mousemove", (e) => {
+    // rate limit the post to server to 200 ms
+    if(Date.now() - lastMove > 200) {
+        postMix(e);
+        lastMove = Date.now();
+    }
+}, false);
 
 ////// CANVAS FUNCTIONALITIY /////
 function sizeCanvas() {

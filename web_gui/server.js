@@ -3,17 +3,17 @@ const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline');
 
 // documentation: https://expressjs.com
-const express = require('express')
+const express = require('express');
 
 // initialize instance of express.
-const app = express()
-app.set('view engine', 'ejs')
+const app = express();
+app.set('view engine', 'ejs');
 
 // boilerplate code for whenever we make json requests with server.
-app.use(express.json()) 
+app.use(express.json());
 
 // update teensy serial port path here, Arduino IDE > Tools > Port menu 
-let teensySerialPort = "/dev/cu.Bluetooth-Incoming-Port";
+let teensySerialPort = "/dev/cu.usbmodem118933801";
 
 const port = new SerialPort({ 
     path: teensySerialPort, 
@@ -27,11 +27,13 @@ port.on("open", () => {
   console.log('serial port open');
 });
 
-parser.on('data', data => {
-  console.log('got word from arduino:', data);
-});
+// parser.on('data', data => {
+//   console.log('got word from arduino:', data);
+// });
 
-app.use(express.static("public"))
+app.use(express.static("public"));
+
+port.write('node.js connected to teensy');
 
 app.post('/mouse', async (req, res) => {
   let mixes = req.body;
@@ -44,7 +46,7 @@ app.post('/mouse', async (req, res) => {
 
   res.send({});
 
-  port.write(serialMsg)
+  port.write(serialMsg);
 })
 
 app.listen(3000);
