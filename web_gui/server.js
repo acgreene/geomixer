@@ -39,7 +39,7 @@ app.post('/mouse', async (req, res) => {
   let mixes = req.body;
   let serialMsg = '';
   for (let j = 0; j < mixes.length; j++) {
-    serialMsg += mixes[j].name.toString() + ' ' + mixes[j].mix.toString() + ', ';
+    serialMsg += mixes[j].name.toString().charAt(0) + ' ' + mixes[j].mix.toFixed(3).toString() + ', ';
   }
 
   console.log(serialMsg);
