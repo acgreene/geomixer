@@ -47,10 +47,23 @@ function postMix(event) {
         }
 
         // create percentage blends for each distance
+        let mult = 1;
+        let temp = [];
+        let tempSum = 0;
         for (let j = 0; j < effectMixes.length; j++) {
-            effectMixes[j].mix = (effectMixes[j].mix / totalDist);
+            mult *= effectMixes[j].mix;
         }
 
+        for (let j = 0; j < effectMixes.length; j++) {
+            let x = mult/effectMixes[j].mix
+            temp.push(mult/effectMixes[j].mix);
+            tempSum += x;
+        }
+
+        for (let j = 0; j < effectMixes.length; j++) {
+            effectMixes[j].mix = temp[j]/tempSum;
+        }
+       
         // post blends to server
         doFetch('/mouse', 'POST', effectMixes, 'Unable to send mouse coords')
     }
