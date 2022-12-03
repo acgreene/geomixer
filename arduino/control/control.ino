@@ -3,7 +3,6 @@
 #include <SPI.h>
 #include <SerialFlash.h>
 
-
 AudioInputI2S            i2s1;
 AudioEffectDistortion2   distortion;
 AudioEffectChorus2       chorus;
@@ -22,15 +21,12 @@ AudioConnection          patchCord8(mixer1, 0, stereo, 0);
 AudioConnection          patchCord14(stereo, 0, i2s2, 0);
 AudioConnection          patchCord15(mixer1, 0, i2s2, 1);
 
-
-
 const int myInput = AUDIO_INPUT_LINEIN;
 AudioControlSGTL5000 audioShield;
 
 // teensy LED pin config
 const int ledPin = 13;
 int ledState = LOW;
-
 
 enum effects1{DISTORTION, CHORUS, PHASER, CLEAN1};
 enum effects2{STEREO, CLEAN2};
@@ -41,8 +37,6 @@ float mixes[5];
 int i;
 float val;
 enum locs{D, C, P, S, U};
-
-
 
 void setup() {
   pinMode(ledPin, OUTPUT);
@@ -76,7 +70,7 @@ void blinkLED() {
 }
 
 void run_distortion(float f) {
-  if(f >= 0 && f <= 1){
+  if (f >= 0 && f <= 1) {
       mixer1.gain(DISTORTION, f);
       Serial.print("Updated distortion to ");
       Serial.println(f);
@@ -84,7 +78,7 @@ void run_distortion(float f) {
 }
 
 void run_chorus(float f) {
-  if(f >= 0 && f <= 1){
+  if (f >= 0 && f <= 1) {
       mixer1.gain(CHORUS, f);
       //adaptive parameter: num voices?
       Serial.print("Updated chorus to ");
@@ -93,7 +87,7 @@ void run_chorus(float f) {
 }
 
 void run_phaser(float f) {
-  if(f >= 0 && f <= 1){
+  if (f >= 0 && f <= 1) {
       mixer1.gain(PHASER, f);
       //phaser.changeDelay((f * 1103 + 220)); //adaptive parameter: 220 to 1323?
       Serial.print("Updated phaser to ");
@@ -102,7 +96,7 @@ void run_phaser(float f) {
 }
 
 void run_stereo(float f) {
-  if(f >= 0 && f <= 1){
+  if (f >= 0 && f <= 1) {
       stereo.mix(f); //change amount of stereo spread
       Serial.print("Updated stereo to ");
       Serial.println(f);
@@ -114,13 +108,13 @@ void run_stereo(float f) {
 }
 
 void run_clean(float f) {
-  if(f >= 0 && f <= 1){
-      if(mixes[S] > 0){
+  if (f >= 0 && f <= 1) {
+      if (mixes[S] > 0) {
         val = f + mixes[S];
         mixer1.gain(CLEAN1, val);
         Serial.print("Updated clean to ");
         Serial.println(val);
-      }else{
+      } else {
         mixer1.gain(CLEAN1, f);
         Serial.print("Updated clean to ");
         Serial.println(f);
@@ -128,10 +122,8 @@ void run_clean(float f) {
     }
 }
 
-
-
 void loop() {
-  if(Serial.available() > 0){
+  if (Serial.available() > 0) {
     rc = Serial.readString();
     blinkLED();
     Serial.println(rc);
@@ -151,11 +143,11 @@ void loop() {
     s = rc.substring(20,25);
     in_mixes[2] = s.toFloat();
 
-    for(i = 0; i < 5; i++){ //reset mixes to 0
+    for (i = 0; i < 5; i++) { //reset mixes to 0
       mixes[i] = 0;
     }
     
-    for(i = 0; i < 3; i++){ //get mixes for each effect that are non-zero
+    for i = 0; i < 3; i++) { //get mixes for each effect that are non-zero
       switch (tags[i]) {
         case 'D': mixes[D] = in_mixes[i]; break;
         case 'C': mixes[C] = in_mixes[i]; break;
