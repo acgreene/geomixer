@@ -147,7 +147,7 @@ void loop() {
       mixes[i] = 0;
     }
     
-    for i = 0; i < 3; i++) { //get mixes for each effect that are non-zero
+    for (i = 0; i < 3; i++) { //get mixes for each effect that are non-zero
       switch (tags[i]) {
         case 'D': mixes[D] = in_mixes[i]; break;
         case 'C': mixes[C] = in_mixes[i]; break;
