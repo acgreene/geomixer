@@ -14,7 +14,6 @@ void AudioEffectChorus2::changeNum(int numVoices)
 void AudioEffectChorus2::update(void) {
   
   //Serial.println("update");
-  int start = micros();
   audio_block_t *block;
   block = receiveWritable(0);
   //new code with one array, remember to change private variables when switching
@@ -47,7 +46,8 @@ void AudioEffectChorus2::update(void) {
         for(int i = 20*AUDIO_BLOCK_SAMPLES; i<21*AUDIO_BLOCK_SAMPLES; i++)
         {
           short current1 = buffer.getValue(i);
-          bp[i-20*AUDIO_BLOCK_SAMPLES] = (bp[i-20*AUDIO_BLOCK_SAMPLES] +current1)/2; 
+          int sum = (bp[i-20*AUDIO_BLOCK_SAMPLES] +5*current1/10);
+          bp[i-20*AUDIO_BLOCK_SAMPLES] = (sum)/2; 
         }
         transmit(block,0);
         release(block);
@@ -63,7 +63,8 @@ void AudioEffectChorus2::update(void) {
         {
           short current1 = buffer.getValue(i);
           short current2 = buffer.getValue((i-10*AUDIO_BLOCK_SAMPLES));
-          bp[i-20*AUDIO_BLOCK_SAMPLES] = (bp[i-20*AUDIO_BLOCK_SAMPLES] +current1+current2)/3; 
+          int sum = bp[i-20*AUDIO_BLOCK_SAMPLES] +5*current1/10+3*current2/10;
+          bp[i-20*AUDIO_BLOCK_SAMPLES] = (sum)/3; 
         }
         transmit(block,0);
         release(block);
@@ -79,10 +80,11 @@ void AudioEffectChorus2::update(void) {
           short current1 = buffer.getValue(i);
           short current2 = buffer.getValue((i-10*AUDIO_BLOCK_SAMPLES));
           short current3 = buffer.getValue((i-20*AUDIO_BLOCK_SAMPLES));
-          short toAdd = (bp[i-20*AUDIO_BLOCK_SAMPLES] + current1)/4;
-          toAdd += current2/4;
-          toAdd += current3/4;
-          bp[i-20*AUDIO_BLOCK_SAMPLES] = toAdd;
+          int sum = bp[i-20*AUDIO_BLOCK_SAMPLES] + 5*current1/10 + 3*current2/10 + 2*current3/10;
+          //short toAdd = (bp[i-20*AUDIO_BLOCK_SAMPLES] + current1)/4;
+          //toAdd += current2/4;
+          //toAdd += current3/4;
+          bp[i-20*AUDIO_BLOCK_SAMPLES] = sum/4;
           //bp[i-20*AUDIO_BLOCK_SAMPLES] = (bp[i-20*AUDIO_BLOCK_SAMPLES] + current1)/4 + (current2 + current3)/4; 
         }
         transmit(block,0);
@@ -91,6 +93,4 @@ void AudioEffectChorus2::update(void) {
       
       //Serial.println("endloop");
     }
-    int end = micros();
-    Serial.println(end - start);
 }
