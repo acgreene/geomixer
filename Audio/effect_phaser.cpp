@@ -59,7 +59,8 @@ void AudioEffectPhaser::update(void)
             queue.insertBlock(bp);
             for (int i = 0; i < AUDIO_BLOCK_SAMPLES; ++i)
             {
-                *bp = (*bp + cpy[i]) / 2;
+                int sum = *bp + cpy[i];
+                *bp = sum/2;
                 bp++;
             }
             transmit(block, 0);
