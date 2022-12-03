@@ -27,6 +27,9 @@ AudioConnection          patchCord15(mixer1, 0, i2s2, 1);
 const int myInput = AUDIO_INPUT_LINEIN;
 AudioControlSGTL5000 audioShield;
 
+// teensy LED pin config
+const int ledPin = 13;
+int ledState = LOW;
 
 
 enum effects1{DISTORTION, CHORUS, PHASER, CLEAN1};
@@ -42,7 +45,7 @@ enum locs{D, C, P, S, U};
 
 
 void setup() {
-  // put your setup code here, to run once:
+  pinMode(ledPin, OUTPUT);
   Serial.begin(9600);
   delay(300);
 
@@ -63,7 +66,14 @@ void setup() {
   stereo.mix(0);
 }
 
-
+void blinkLED() {
+  if (ledState == LOW) {
+    ledState = HIGH;
+  } else {
+    ledState = LOW;
+  }
+  digitalWrite(ledPin, ledState);
+}
 
 void run_distortion(float f) {
   if(f >= 0 && f <= 1){
@@ -123,6 +133,7 @@ void run_clean(float f) {
 void loop() {
   if(Serial.available() > 0){
     rc = Serial.readString();
+    blinkLED();
     Serial.println(rc);
 
     //distortion: D, chorus: C, phasor: P, stereo: S, clean: U
