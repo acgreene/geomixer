@@ -71,7 +71,7 @@ function postMix(event) {
 let lastMove = 0;
 canvas.addEventListener("mousemove", (e) => {
     // rate limit the post to server to 200 ms
-    if(Date.now() - lastMove > 200) {
+    if(Date.now() - lastMove > 1000) {
         postMix(e);
         lastMove = Date.now();
     }
