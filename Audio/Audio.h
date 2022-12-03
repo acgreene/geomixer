@@ -53,7 +53,7 @@
 // while you make changes.
 //
 #define AudioNoInterrupts() (NVIC_DISABLE_IRQ(IRQ_SOFTWARE))
-#define AudioInterrupts()   (NVIC_ENABLE_IRQ(IRQ_SOFTWARE))
+#define AudioInterrupts() (NVIC_ENABLE_IRQ(IRQ_SOFTWARE))
 
 // include all the library headers, so a sketch can use a single
 // #include <Audio.h> to get the whole library
@@ -139,10 +139,11 @@
 #include "synth_pwm.h"
 #include "synth_wavetable.h"
 
-//Geomixer effects here:
+// Geomixer effects here:
 #include "effect_phaser.h"
 #include "AudioEffectChorus2.h"
 //#include "effect_myreverb.h"
 #include "AudioEffectDistortion2.h"
+#include "effect_stereo.h"
 
 #endif
