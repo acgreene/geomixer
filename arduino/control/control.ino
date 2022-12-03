@@ -8,7 +8,7 @@ AudioEffectDistortion2   distortion;
 AudioEffectChorus2       chorus;
 AudioEffectPhaser        phaser;
 AudioMixer4              mixer1;
-AudioEffectStereo        stereo;
+//AudioEffectStereo        stereo;
 AudioOutputI2S           i2s2;
 AudioConnection          patchCord1(i2s1, 0, distortion, 0);
 AudioConnection          patchCord2(i2s1, 0, chorus, 0);
@@ -17,8 +17,8 @@ AudioConnection          patchCord5(distortion, 0, mixer1, 0);
 AudioConnection          patchCord6(chorus, 0, mixer1, 1);
 AudioConnection          patchCord7(phaser, 0, mixer1, 2);
 AudioConnection          patchCord4(i2s1, 0, mixer1, 3);
-AudioConnection          patchCord8(mixer1, 0, stereo, 0);
-AudioConnection          patchCord14(stereo, 0, i2s2, 0);
+//AudioConnection          patchCord8(mixer1, 0, stereo, 0);
+//AudioConnection          patchCord14(stereo, 0, i2s2, 0);
 AudioConnection          patchCord15(mixer1, 0, i2s2, 1);
 
 const int myInput = AUDIO_INPUT_LINEIN;
@@ -56,8 +56,8 @@ void setup() {
 
   chorus.changeNum(2);
   phaser.begin(220);
-  stereo.begin();
-  stereo.mix(0);
+//  stereo.begin();
+//  stereo.mix(0);
 }
 
 void blinkLED() {
@@ -95,17 +95,17 @@ void run_phaser(float f) {
     }
 }
 
-void run_stereo(float f) {
-  if (f >= 0 && f <= 1) {
-      stereo.mix(f); //change amount of stereo spread
-      Serial.print("Updated stereo to ");
-      Serial.println(f);
-      if(mixes[U] == 0 && f > 0){
-        mixer1.gain(CLEAN1, f);
-        Serial.println("(and clean as well) ");
-      }
-    }
-}
+//void run_stereo(float f) {
+//  if (f >= 0 && f <= 1) {
+//      stereo.mix(f); //change amount of stereo spread
+//      Serial.print("Updated stereo to ");
+//      Serial.println(f);
+//      if(mixes[U] == 0 && f > 0){
+//        mixer1.gain(CLEAN1, f);
+//        Serial.println("(and clean as well) ");
+//      }
+//    }
+//}
 
 void run_clean(float f) {
   if (f >= 0 && f <= 1) {
@@ -160,7 +160,7 @@ void loop() {
     run_distortion(mixes[D]);
     run_chorus(mixes[C]);
     run_phaser(mixes[P]);
-    run_stereo(mixes[S]);
+//    run_stereo(mixes[S]);
     run_clean(mixes[U]);
   }
 }
