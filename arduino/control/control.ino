@@ -48,13 +48,14 @@ void setup() {
   mixer1.gain(PHASER, 0);
   mixer1.gain(CLEAN1, 1);
   chorus.changeNum(2);
-  phaser.begin(220);
+  phaser.begin(300);
   stereo.mix(0);
 }
 void blinkLED() {
   if (ledState == LOW) {
     ledState = HIGH;
-  } else {
+  } 
+  else {
     ledState = LOW;
   }
   digitalWrite(ledPin, ledState);
@@ -64,7 +65,8 @@ void run_distortion(float f) {
   if (f == 0 && on) {
     distortion.setOn(false);
     mixer1.gain(DISTORTION, f);
-  } else if (f > 0 && f <= 1) {
+  } 
+  else if (f > 0 && f <= 1) {
     if(!on){
       distortion.setOn(true);
     }
@@ -77,7 +79,8 @@ void run_chorus(float f) {
   if (f == 0 && on) {
     chorus.setOn(false);
     mixer1.gain(CHORUS, f);
-  } else if (f > 0 && f <= 1) {
+  } 
+  else if (f > 0 && f <= 1) {
     if(!on){
       chorus.setOn(true);
     }
@@ -90,10 +93,12 @@ void run_phaser(float f) {
   if (f == 0 && on) {
     phaser.setOn(false);
     mixer1.gain(PHASER, f);
-  } else if (f > 0 && f <= 1) {
+  } 
+  else if (f > 0 && f <= 1) {
     if(!on){
       phaser.setOn(true);
     }
+    phaser.changeDelay(300 + (1-f)(1023));
     mixer1.gain(PHASER, f);
   }
 }
@@ -103,7 +108,8 @@ void run_stereo(float f) {
   if (f == 0 && on) {
     stereo.setOn(false);
     mixer1.gain(STEREO, f);
-  } else if (f > 0 && f <= 1) {
+  } 
+  else if (f > 0 && f <= 1) {
     if(!on){
       stereo.setOn(true);
     }
@@ -119,7 +125,8 @@ void run_clean(float f) {
     if (mixes[S] > 0) {
       val = f + mixes[S];
       mixer1.gain(CLEAN1, val);
-    } else {
+    } 
+    else {
       mixer1.gain(CLEAN1, f);
     }
   }
