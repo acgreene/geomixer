@@ -131,10 +131,15 @@ void AudioEffectPhaser::begin(short delay_length = 220)
         }
     } */
 }
-void AudioEffectPhaser::turnOff()
+void AudioEffectPhaser::setOn(bool status)
 {
     // Serial.println("Sanity check");
-    on = false;
+    on = status;
+}
+
+bool AudioEffectPhaser::getOn()
+{
+    return on;
 }
 
 void AudioEffectPhaser::changeDelay(short delay_length)

@@ -36,7 +36,11 @@ public:
         void changeDelay(short delay_length);
 
         //will be useful for when effect not in triangle
-        void turnOff();
+        //void turnOff();
+
+        bool getOn();
+
+        void setOn(bool status);
 
 private:
         bool on;
