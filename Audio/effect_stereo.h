@@ -14,9 +14,9 @@ public:
           on = false;
           delay_val = 0;
         }
-        void begin(void);
         virtual void update(void);
-        void turnOff(void);
+        void setOn(bool);
+        bool getOn(void);
         void mix(float val);
 private:
         bool on;

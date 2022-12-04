@@ -36,6 +36,7 @@ float in_mixes[3];
 float mixes[5];
 int i;
 float val;
+bool on;
 enum locs{D, C, P, S, U};
 
 void setup() {
@@ -56,7 +57,6 @@ void setup() {
 
   chorus.changeNum(2);
   phaser.begin(220);
-  stereo.begin();
   stereo.mix(0);
 }
 
@@ -70,41 +70,91 @@ void blinkLED() {
 }
 
 void run_distortion(float f) {
-  if (f >= 0 && f <= 1) {
-      mixer1.gain(DISTORTION, f);
+  on = distortion.getOn();
+  if (f == 0 && on) {
+    distortion.setOn(false);
+    mixer1.gain(DISTORTION, f);
+  } else if (f > 0 && f <= 1) {
+    if(!on){
+      distortion.setOn(true);
+    }
+    mixer1.gain(DISTORTION, f);
+  }
+  
+//  if (f >= 0 && f <= 1) {
+//    if (f == 0) {
+//      distortion.turnOff();
+//    }
+//      mixer1.gain(DISTORTION, f);
 //      Serial.print("Updated distortion to ");
 //      Serial.println(f);
-  }
+//  }
 }
 
 void run_chorus(float f) {
-  if (f >= 0 && f <= 1) {
-      mixer1.gain(CHORUS, f);
-      //adaptive parameter: num voices?
+  on = chorus.getOn();
+  if (f == 0 && on) {
+    chorus.setOn(false);
+    mixer1.gain(CHORUS, f);
+  } else if (f > 0 && f <= 1) {
+    if(!on){
+      chorus.setOn(true);
+    }
+    mixer1.gain(CHORUS, f);
+  }
+  
+//  if (f >= 0 && f <= 1) {
+//      mixer1.gain(CHORUS, f);
+//      //adaptive parameter: num voices?
 //      Serial.print("Updated chorus to ");
 //      Serial.println(f);
-    }
+//    }
 }
 
 void run_phaser(float f) {
-  if (f >= 0 && f <= 1) {
-      mixer1.gain(PHASER, f);
-      //phaser.changeDelay((f * 1103 + 220)); //adaptive parameter: 220 to 1323?
+  on = phaser.getOn();
+  if (f == 0 && on) {
+    phaser.setOn(false);
+    mixer1.gain(PHASER, f);
+  } else if (f > 0 && f <= 1) {
+    if(!on){
+      phaser.setOn(true);
+    }
+    mixer1.gain(PHASER, f);
+  }
+  
+//  if (f >= 0 && f <= 1) {
+//      mixer1.gain(PHASER, f);
+//      //phaser.changeDelay((f * 1103 + 220)); //adaptive parameter: 220 to 1323?
 //      Serial.print("Updated phaser to ");
 //      Serial.println(f);
-    }
+//    }
 }
 
 void run_stereo(float f) {
-  if (f >= 0 && f <= 1) {
-      stereo.mix(f); //change amount of stereo spread
+  on = stereo.getOn();
+  if (f == 0 && on) {
+    stereo.setOn(false);
+    mixer1.gain(STEREO, f);
+  } else if (f > 0 && f <= 1) {
+    if(!on){
+      stereo.setOn(true);
+    }
+    mixer1.gain(STEREO, f);
+    if(mixes[U] == 0){
+      mixer1.gain(CLEAN1, f);
+    }
+  } //else if f == 0 and off, do nothing
+  
+//  if (f >= 0 && f <= 1) {
+//      stereo.mix(f); //change amount of stereo spread
 //      Serial.print("Updated stereo to ");
 //      Serial.println(f);
-      if(mixes[U] == 0 && f > 0){
-        mixer1.gain(CLEAN1, f);
+//      if(mixes[U] == 0 && f > 0){
+//        mixer1.gain(CLEAN1, f);
 //        Serial.println("(and clean as well) ");
-      }
-    }
+//      }
+//    }
 }
 
 void run_clean(float f) {

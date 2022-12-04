@@ -40,14 +40,14 @@ void AudioEffectStereo::update(void) {
   //Serial.println(duration);
 }
 
-void AudioEffectStereo::begin(void)
+void AudioEffectStereo::setOn(bool b)
 {
-    this->on = true;
+    this->on = b;
 }
 
-void AudioEffectStereo::turnOff(void)
+bool AudioEffectStereo::getOn(void)
 {
-    this->on = false;
+    return this->on;
 }
 
 void AudioEffectStereo::mix(float val) //val from 0 to 1 guaranteed
