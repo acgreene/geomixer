@@ -37,8 +37,8 @@ void AudioEffectPhaser::update(void)
         sine_idx += increment;
         //Serial.println("else");
         oscil_delay = (sineOut * OSCILLATION_AMP) >> 15;
-        Serial.println(oscil_delay);
-        Serial.println(delayAmount);
+        //Serial.println(oscil_delay);
+        //Serial.println(delayAmount);
         short cpy[AUDIO_BLOCK_SAMPLES];
         //OSCILLATION_AMP = 40
         //oscil_delay should be on the order of -40 to 40
