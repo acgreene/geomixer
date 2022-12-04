@@ -55,5 +55,3 @@ void AudioFilterFIR::update(void)
 	}
 	release(block);
 }
-
-
