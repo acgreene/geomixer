@@ -17,9 +17,13 @@ public:
                 //memset(voice2, 0, sizeof(voice2));
                 //memset(voice3, 0, sizeof(voice3));
                 //memset(voice4, 0, sizeof(voice4));
+                isOn = false;
         }
         virtual void update(void);
         void changeNum(int numVoices);
+        void setOn(bool status);
+        bool getOn();
+
 private:
         audio_block_t *inputQueueArray[1];
         int num_voices;
@@ -32,5 +36,6 @@ private:
         //short voice3[31*AUDIO_BLOCK_SAMPLES];
         //short voice4[41*AUDIO_BLOCK_SAMPLES];
         int pastSize;
+        bool isOn;
 };
 #endif
