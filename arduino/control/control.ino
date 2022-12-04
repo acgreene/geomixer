@@ -79,12 +79,23 @@ void run_chorus(float f) {
   if (f == 0 && on) {
     chorus.setOn(false);
     mixer1.gain(CHORUS, f);
+    chorus.changeNum(0);
   } 
   else if (f > 0 && f <= 1) {
     if(!on){
       chorus.setOn(true);
     }
     mixer1.gain(CHORUS, f);
+    if(f <= .33){
+      chorus.changeNum(1);
+    }
+    else if(f > .33 && f <= .66){
+      chorus.changeNum(2);
+    }
+    else{
+      chorus.changeNum(3);
+    }
+      
   }
 }
 
