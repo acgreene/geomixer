@@ -5,8 +5,14 @@ const ctx = canvas.getContext('2d');
 const overlay = document.getElementById('overlay');
 const title = document.getElementById('title');
 const toolbar = document.getElementById('toolbar');
+const addEffectsButton = document.getElementById('add-fx-button');
 const deleteEffectsButton = document.getElementById('delete-fx-button');
 const fxSelector = document.getElementById('fxSelector');
+
+////// BUTTON FUNCTIONALITY /////
+addEffectsButton.addEventListener('click', () => {
+    addEffectsButton.classList.toggle('active');
+});
 
 ///// GEOMIXER OBJECTS /////
 let mouse = new Mouse();
@@ -70,7 +76,7 @@ function postMix(event) {
 }
 let lastMove = 0;
 canvas.addEventListener("mousemove", (e) => {
-    // rate limit the post to server to 200 ms
+    // rate limit the post to server
     if(Date.now() - lastMove > 1000) {
         postMix(e);
         lastMove = Date.now();
@@ -86,19 +92,23 @@ sizeCanvas();
 
 // create point on canvas
 canvas.addEventListener("click", (event) => {
-    // obtain click coordinates
-    let xClick = event.clientX;
-    let yClick = event.clientY - toolbar.offsetHeight;
+    // if the add fx button is toggled and the overlay has less than 4 effects placed (triangle only).
+    if (addEffectsButton.classList.contains('active') &&
+        (overlay.childElementCount < 3)) {
+        // obtain click coordinates
+        let xClick = event.clientX;
+        let yClick = event.clientY - toolbar.offsetHeight;
 
-    // create effect div
-    let effect = document.createElement('div');
-    let fxName = fxSelector.options[fxSelector.selectedIndex].text; 
+        // create effect div
+        let effect = document.createElement('div');
+        let fxName = fxSelector.options[fxSelector.selectedIndex].text; 
 
-    // create point using coordinates and div
-    shape.createPoint(xClick, yClick, effect, overlay, fxName);
-    
-    // update the shape properties
-    shape.update();
+        // create point using coordinates and div
+        shape.createPoint(xClick, yClick, effect, overlay, fxName);
+        
+        // update the shape properties
+        shape.update();
+    }
 })
 
 // delete point on canvas from delete fx button
