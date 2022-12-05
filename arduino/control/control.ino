@@ -19,11 +19,17 @@ AudioConnection          patchCord4(i2s1, 0, mixer1, 3);
 AudioConnection          patchCord8(mixer1, 0, stereo, 0);
 AudioConnection          patchCord14(stereo, 0, i2s2, 0);
 AudioConnection          patchCord15(mixer1, 0, i2s2, 1);
+
+
 const int myInput = AUDIO_INPUT_LINEIN;
 AudioControlSGTL5000 audioShield;
+
+
 // teensy LED pin config
 const int ledPin = 13;
 int ledState = LOW;
+
+
 enum effects1{DISTORTION, CHORUS, PHASER, CLEAN1};
 enum effects2{STEREO, CLEAN2};
 String rc, s;
@@ -34,24 +40,31 @@ int i;
 float val;
 bool on;
 enum locs{D, C, P, S, U};
+
+//elapsedMillis timeTest; //for testing
+
 void setup() {
   pinMode(ledPin, OUTPUT);
   Serial.begin(9600);
   delay(300);
+  
   // allocate memory for the audio library
   AudioMemory(8);
   audioShield.enable();
   audioShield.volume(0.50);
   audioShield.inputSelect(myInput);
+  
   mixer1.gain(DISTORTION, 0);
   mixer1.gain(CHORUS, 0);
   mixer1.gain(PHASER, 0);
   mixer1.gain(CLEAN1, 1);
-  chorus.changeNum(2);
+  
+  chorus.changeNum(0);
   phaser.begin(300);
   distortion.begin();
   stereo.mix(0);
 }
+
 void blinkLED() {
   if (ledState == LOW) {
     ledState = HIGH;
@@ -61,6 +74,7 @@ void blinkLED() {
   }
   digitalWrite(ledPin, ledState);
 }
+
 void run_distortion(float f) {
   on = distortion.getOn();
   if (f == 0 && on) {
@@ -96,7 +110,6 @@ void run_chorus(float f) {
     else{
       chorus.changeNum(3);
     }
-      
   }
 }
 
@@ -146,11 +159,12 @@ void run_clean(float f) {
 
 void loop() {
   if (Serial.available() > 0) {
+    //timeTest = 0;
     rc = Serial.readString();
     blinkLED();
 
     //distortion: D, chorus: C, phasor: P, stereo: S, clean: U
-    //c 0.000, c 0.000, c 0.000,
+    //input format: c 0.000, c 0.000, c 0.000,
     
     tags[0] = rc.charAt(0); //parse input
     s = rc.substring(2,7);
@@ -181,5 +195,6 @@ void loop() {
     run_phaser(mixes[P]);
     run_stereo(mixes[S]);
     run_clean(mixes[U]);
+    //Serial.println(timeTest);
   }
 }
