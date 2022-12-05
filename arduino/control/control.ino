@@ -49,6 +49,7 @@ void setup() {
   mixer1.gain(CLEAN1, 1);
   chorus.changeNum(2);
   phaser.begin(300);
+  distortion.begin();
   stereo.mix(0);
 }
 void blinkLED() {
@@ -109,7 +110,7 @@ void run_phaser(float f) {
     if(!on){
       phaser.setOn(true);
     }
-    phaser.changeDelay(300 + (1-f)(1023));
+    phaser.changeDelay(300 + (1-f)*(1023));
     mixer1.gain(PHASER, f);
   }
 }

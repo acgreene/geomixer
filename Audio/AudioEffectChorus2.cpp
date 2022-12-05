@@ -8,11 +8,11 @@ void AudioEffectChorus2::changeNum(int numVoices)
   // Serial.println("changeNum");
   num_voices = numVoices;
 }
-void setOn(bool status)
+void AudioEffectChorus2::setOn(bool status)
 {
   isOn = status;
 }
-bool getOn()
+bool AudioEffectChorus2::getOn()
 {
   return isOn;
 }
@@ -33,7 +33,7 @@ void AudioEffectChorus2::update(void)
     // Serial.println(num_voices);
     if (num_voices == 0)
     {
-      
+
       short *cpy = bp;
       buffer.insertBlock(cpy);
 
