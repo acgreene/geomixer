@@ -34,19 +34,19 @@ void AudioEffectDistortion2::update(void)
           if (abs(*bp * input_scalar) > ((output_scalar / 3)) && abs(*bp * input_scalar) < ((2 * (output_scalar / 3))))
           {
             // Serial.println(*bp);
-            *bp = (*bp / abs(*bp)) * (output_scalar) * ((3 - pow((2 - (*bp / abs(*bp)) * (3.0 * (float)(*bp * input_scalar) / (float)(output_scalar))), 2)) / 6);
+            *bp = (short)((*bp / abs(*bp)) * (output_scalar) * ((3 - pow((2 - (*bp / abs(*bp)) * (3.0 * (float)(*bp * input_scalar) / (float)(output_scalar))), 2)) / 6));
           }
           // This if statement above creates the curvature for the clipping when the signal is between 1/3 and 2/3 of the max
 
           else if (abs(*bp * input_scalar) > (2 * (output_scalar / 3)))
           {
             // Serial.println((2*(output_scalar/3)));
-            *bp = (*bp / abs(*bp)) * (output_scalar / 2);
+            *bp = (short)((*bp / abs(*bp)) * (output_scalar / 2));
           }
 
           else
           {
-            *bp = *bp * input_scalar;
+            *bp = (short)(*bp * input_scalar);
           }
           // This if statement above flattens the signal when it is beyond 2/3 of the max and leaves it intact if it is less than 1/3
         }
