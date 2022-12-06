@@ -86,6 +86,7 @@ void run_distortion(float f) {
       distortion.setOn(true);
     }
     mixer1.gain(DISTORTION, f);
+    distortion.change_output_scalar(f);
   }
 }
 
