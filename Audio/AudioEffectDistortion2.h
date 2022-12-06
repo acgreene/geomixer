@@ -15,6 +15,7 @@ public:
         void begin();
         bool getOn();
         void setOn(bool status);
+        void change_output_scalar(int32_t output_scalar);
 
 private:
         int32_t output_scalar;
