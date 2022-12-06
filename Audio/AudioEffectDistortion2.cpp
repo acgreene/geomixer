@@ -3,10 +3,10 @@
 
 //}
 
-void AudioEffectDistortion2::change_output_scalar(int32_t scalar_factor)
+void AudioEffectDistortion2::change_output_scalar(float scalar_factor)
 {
   
-  output_scalar = (output_scalar/scalar_factor);
+  output_scalar = (max_/scalar_factor);
 }
 
 void AudioEffectDistortion2::update(void)
