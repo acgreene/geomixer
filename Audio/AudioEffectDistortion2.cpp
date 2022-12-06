@@ -3,6 +3,12 @@
 
 //}
 
+void AudioEffectDistortion2::change_output_scalar(int32_t scalar_factor)
+{
+  
+  output_scalar = (output_scalar/scalar_factor);
+}
+
 void AudioEffectDistortion2::update(void)
 {
   audio_block_t *block;
