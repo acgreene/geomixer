@@ -1,1 +1,39 @@
-a TEXT file describing what the source code files are, how they are to be used together, and the general theory of operation of your code.
+Source code included files:
+  Audio folder: effects implementations to be added to Teensyduino Audio folder
+    Audio.h: updated to include the new effects
+    Circular Buffer: circular_buffer.cpp and .h files
+    Phaser: effect_phaser.cpp and .h files
+    Stereo: effect_stereo.cpp and .h files
+    Distortion: effect_mydistortion.cpp and .h files
+    Chorus: effect_mychorus.cpp and .h files
+    Simulation Reverb (unused): effect_myreverb.cpp and .h files
+    IR Reverb (unused): effect_irreverb.cpp and .h files
+    Octave (unused): effect_octave.cpp and .h files
+
+  control folder: Teensyduino control logic
+    control.ino: Teensyduino file with control logic to connect effects
+                 implementations with GUI through Serial and run effects
+
+  prototypes folder: prototyping and other analysis files
+    chorus folder
+      chorus-demo.py: python prototyping file
+    distortion folder
+      distortion_test.py: python prototyping file
+    phaser folder
+      phaser.py: python prototyping file
+    reverb folder
+      reverb_sim.py: python prototyping file
+      reverb_convert.py: used to convert IR signal to fixed point
+      reverb_ir.csv: fixed point IR signal coefficients
+      smalldrumroomedit.wav: IR signal used
+
+  web_gui folder: all files associated with GUI implementation
+    node_modules: node.js required files
+    ...
+
+To run system together, see USAGE.txt
+
+The system runs by uploading the control.ino file to the Teensy and controls
+Serial communication between the GUI and Teensy. It also sets the adaptive
+parameters on the effects and uses the built in mix features to combine the
+effects and run the signal through the system.

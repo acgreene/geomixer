@@ -1,3 +1,15 @@
-This project did not require any purchases to be reimbursed. We used mostly the lab stock from the audio labs: Teensy 4.1, USB Aux adapter, Aux Cords, Micro USB Cord,
-Teensy Aux Input Adaptor, and the Teensy Audio Shield. Beyond that the used parts were our own personal items: MacBook, iPad, Headphones, XLR to TRS 3.5mm adaptor, and a 
-Microphone.
+This project did not require any purchases to be reimbursed. We used mostly the
+lab stock from the audio labs:
+  Teensy 4.1
+  USB Aux adapter
+  Aux Cords
+  Micro USB Cord
+  Teensy Aux Input Adaptor
+  Teensy Audio Shield
+
+Beyond that the used parts were our own personal items:
+  MacBook
+  iPad
+  Headphones
+  XLR to TRS 3.5mm adaptor
+  Microphone
