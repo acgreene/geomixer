@@ -1,5 +1,10 @@
 #include <Arduino.h>
 #include "effect_myreverb.h"
+#include "arm_math.h"
+#include "dspinst.h"
+
+#include <Arduino.h>
+#include "effect_myreverb.h"
 
 void AudioEffectMyReverb::init(void)
 {

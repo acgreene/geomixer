@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "AudioEffectChorus2.h"
+#include "effect_mychorus.h"
 
 // update is called every 128 samples/2.9 ms
 // attempting to write 29 ms delay chorus

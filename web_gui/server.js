@@ -12,12 +12,12 @@ app.set('view engine', 'ejs');
 // boilerplate code for whenever we make json requests with server.
 app.use(express.json());
 
-// update teensy serial port path here, Arduino IDE > Tools > Port menu 
-let teensySerialPort = "/dev/cu.usbmodem118933801";
+// update teensy serial port path here, Arduino IDE > Tools > Port menu
+let teensySerialPort = '/dev/cu.usbmodem118956001'; //"/dev/cu.usbmodem118933801";
 
-const port = new SerialPort({ 
-    path: teensySerialPort, 
-    baudRate: 9600 
+const port = new SerialPort({
+    path: teensySerialPort,
+    baudRate: 9600
 });
 
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));

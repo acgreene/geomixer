@@ -52,6 +52,8 @@ bool AudioEffectStereo::getOn(void)
 
 void AudioEffectStereo::mix(float val) //val from 0 to 1 guaranteed
 {
+    //val = floor(val * 10.) / 10.;
+    val = (val * val * val * val) / 8.0;
     delay_val = val * DELAY; //make new delay val from 0-DELAY
     //Serial.println(delay_val);
 }

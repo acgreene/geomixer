@@ -1,11 +1,11 @@
 #include <Arduino.h>
-#include "AudioEffectDistortion2.h"
+#include "effect_mydistortion.h"
 
 //}
 
 void AudioEffectDistortion2::change_output_scalar(float scalar_factor)
 {
-  
+
   output_scalar = (max_/scalar_factor);
 }
 

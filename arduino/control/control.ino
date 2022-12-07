@@ -2,6 +2,7 @@
 #include <Wire.h>
 #include <SPI.h>
 #include <SerialFlash.h>
+
 AudioInputI2S            i2s1;
 AudioEffectDistortion2   distortion;
 AudioEffectChorus2       chorus;
@@ -30,8 +31,7 @@ const int ledPin = 13;
 int ledState = LOW;
 
 
-enum effects1{DISTORTION, CHORUS, PHASER, CLEAN1};
-enum effects2{STEREO, CLEAN2};
+enum effects{DISTORTION, CHORUS, PHASER, CLEAN1};
 String rc, s;
 char tags[3];
 float in_mixes[3];
@@ -51,7 +51,7 @@ void setup() {
   // allocate memory for the audio library
   AudioMemory(8);
   audioShield.enable();
-  audioShield.volume(0.50);
+  audioShield.volume(0.5);
   audioShield.inputSelect(myInput);
   
   mixer1.gain(DISTORTION, 0);
@@ -101,7 +101,7 @@ void run_chorus(float f) {
     if(!on){
       chorus.setOn(true);
     }
-    mixer1.gain(CHORUS, f);
+    mixer1.gain(CHORUS, f*1.5);
     if(f <= .33){
       chorus.changeNum(1);
     }
@@ -131,19 +131,19 @@ void run_phaser(float f) {
 
 void run_stereo(float f) {
   on = stereo.getOn();
-  if (f == 0 && on) {
+  if (f <= 0 && on) {
     stereo.setOn(false);
-    mixer1.gain(STEREO, f);
+    stereo.mix(f);
   } 
   else if (f > 0 && f <= 1) {
     if(!on){
       stereo.setOn(true);
     }
-    mixer1.gain(STEREO, f);
+    stereo.mix(f);
     if(mixes[U] == 0){
-      mixer1.gain(CLEAN1, f);
+      mixer1.gain(CLEAN1, f*0.9);
     }
-  } //else if f == 0 and off, do nothing
+  }
 }
 
 void run_clean(float f) {
@@ -151,8 +151,7 @@ void run_clean(float f) {
     if (mixes[S] > 0) {
       val = f + mixes[S];
       mixer1.gain(CLEAN1, val);
-    } 
-    else {
+    } else {
       mixer1.gain(CLEAN1, f);
     }
   }

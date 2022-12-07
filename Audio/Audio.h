@@ -141,9 +141,9 @@
 
 // Geomixer effects here:
 #include "effect_phaser.h"
-#include "AudioEffectChorus2.h"
+#include "effect_mychorus.h"
 //#include "effect_myreverb.h"
-#include "AudioEffectDistortion2.h"
+#include "effect_mydistortion.h"
 #include "effect_stereo.h"
 
 #endif
