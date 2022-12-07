@@ -29,7 +29,17 @@ Source code included files:
 
   web_gui folder: all files associated with GUI implementation
     node_modules: node.js required files
-    ...
+    package.json: contains the GUI dependencies
+    package-lock.json: contains all node.js packages used in the GUI and which version
+    server.js: the node.js server code that hosts the GUI, receives requests from the GUI, 
+    and communicates to the teensy 4.1 via serial.
+    public
+      geomixer.js: GUI javascript class implementations
+      index.js: GUI functionality
+      index.css: GUI styling
+      index.html: GUI web markup
+
+
 
 To run system together, see USAGE.txt
 
