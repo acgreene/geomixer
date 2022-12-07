@@ -6,5 +6,7 @@ Required Software:
 
 In the Teensyduino package, you must copy the files in this Audio folder into
 the Teensyduino audio folder at:
-  Mac: Applications/teensyduino.app/contents/java/hardware/teensy/avr/libraries/audio
-  Windows: 
+  Mac: Applications\teensyduino.app\contents\java\hardware\teensy\avr\libraries\Audio
+  Windows: C:\Program Files (x86)\Arduino\hardware\teensy\avr\libraries\Audio
+
+Node.js is required for the GUI to run successfully (as explained in USAGE.txt)
