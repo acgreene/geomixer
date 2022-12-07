@@ -1,1 +1,10 @@
-a TEXT file with information on how to compile and run your code, if you used something outside of what's covered in class / lab 
+a TEXT file with information on how to compile and run your code, if you used something outside of what's covered in class / lab
+Required Software:
+  Teensyduino
+  Teensy Audio Library
+  Node.js
+
+In the Teensyduino package, you must copy the files in this Audio folder into
+the Teensyduino audio folder at:
+  Mac: Applications/teensyduino.app/contents/java/hardware/teensy/avr/libraries/audio
+  Windows: 
