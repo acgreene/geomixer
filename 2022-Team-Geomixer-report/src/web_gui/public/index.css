@@ -1,0 +1,91 @@
+html, body {
+    margin: 0;
+    height: 100%;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+
+    background: linear-gradient(to right,
+        rgb(0, 1, 2) 10%, 
+        rgb(7, 0, 5) 30%, 
+        rgb(0, 1, 2) 70%
+    );
+    background-size: 200% auto;
+
+    animation: shine 20s linear infinite;
+}
+
+#title {
+    text-align: center;
+}
+
+#toolbar {
+    width: 100%;
+    height: 80px;
+
+    background: linear-gradient(to right,
+        rgb(1, 15, 24) 10%, 
+        rgb(2, 57, 51) 30%, 
+        rgb(18, 1, 24) 70%
+    );
+    background-size: 200% auto;
+
+    animation: shine 20s linear infinite;
+}
+
+#container {
+    position: relative;
+}
+
+#container canvas, #overlay {
+    position: absolute;
+}
+
+canvas {
+    border: 1px solid black;
+}
+
+.effect {
+    height: 50px;
+    width: 50px;
+    background-color: rgb(191, 237, 244);
+    border-radius: 50%;
+    position: absolute;
+}
+
+span {
+    background-color: rgb(31, 40, 41);
+    color: rgb(207, 246, 252);
+}
+
+.effect:hover {
+    scale: 1.2;
+    transition: 0.4s;
+}
+
+@keyframes shine {
+    0% { background-position: left; }
+	25% { background-position: center; }
+	50% { background-position: right; }
+    75% { background-position: center; }
+    100% { background-position: left; }
+}
+
+#add-fx-button {
+    position: relative;
+    border: 0;
+    border-radius: 0.5em;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#add-fx-button:active, .active {
+    top: 2px;
+    left: 1px;
+    background-color: pink;
+    box-shadow: none;
+}

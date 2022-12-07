@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geomixer</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="gui">
+        <!-- <h1 id="title">Geomixer</h1> -->
+        <div id="toolbar">
+            <select name="fxSelector" id="fxSelector">
+                <option value="unprocessed">Unprocessed</option>
+                <option value="chorus">Chorus</option>
+                <option value="phaser">Phaser</option>
+                <option value="stereo">Stereo</option>
+                <option value="disto">Distortion</option>
+            </select>
+            <button id="add-fx-button">Add FX</button>
+            <button id="delete-fx-button">Delete Selected FX</button>
+        </div>
+        <div id="container">
+            <canvas id="canvas" role="presentation"></canvas>
+            <div id="overlay"></div>
+        </div>
+        
+    </div>
+    <script src="geomixer.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
