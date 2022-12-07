@@ -1,4 +1,3 @@
-a TEXT file with information on how to compile and run your code, if you used something outside of what's covered in class / lab
 Required Software:
   Teensyduino
   Teensy Audio Library

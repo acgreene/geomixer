@@ -1,1 +1,30 @@
-a TEXT file with user and user interface documentation. How to run your code, and which keys / controller buttons do what.
+To run the project:
+1. If you have not already, add the files in the Audio folder to the Teensyduino
+Audio folder (see INSTALL.txt)
+2. Open control.ino (in control folder)
+3. Upload control.ino to Teensy connected to the Computer
+4. Using a terminal, navigate to the web_gui folder
+5. Record the Teensy port that is being used (tools/port/dev/cu.usbmodem#)
+6. Update source file server.js line 16 with this new Teensy port
+7. Run "npm run devStart" in the terminal
+8. Open an internet browser, navigate to "localhost:3000"
+
+To add in nodes to the screen:
+1. Select "Add FX" buttons (ensure that it is red)
+2. In the drop down menu, select an effect
+3. Touch somewhere on the screen to place the effect
+4. Repeat for 3 effects
+5. Unselect "Add FX"
+
+To change mix values:
+1. Touch within the Green triangle to change the mix amount
+2. As you approach a different effect's node, that effect is applied with a
+higher mix value
+
+To remove a node:
+1. Select the node (it will become highlighted red)
+2. Press "Delete Selected FX"
+
+To run on iPad:
+Use app such as Duet to connect iPad as extended monitor and drag internet
+window with GUI to iPad screen.
